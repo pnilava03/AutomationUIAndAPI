@@ -54,6 +54,7 @@ public class Hooks {
         }else{
             if(scenario.getStatus()==Status.FAILED){
                 TestLogger.log("Attaching screenshot to ChainTest...");
+
                 byte[] bytes = ReportsUtil.takeScreenshotAsByte();
                 if (bytes != null) {
                     ChainTestListener.embed(bytes, "image/png");

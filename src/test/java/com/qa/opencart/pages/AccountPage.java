@@ -2,10 +2,13 @@ package com.qa.opencart.pages;
 
 import com.qa.opencart.constants.AppConstant;
 import com.qa.opencart.utils.ElementUtil;
+import io.cucumber.java.bs.A;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.testng.Assert;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccountPage {
@@ -20,6 +23,7 @@ public class AccountPage {
 
     private final By list_group_Xpath = By.xpath("//div[@class='list-group']/a");
     private final By header_Xpath = By.xpath("//div[@id='content']/h2");
+    private final By listOfLinksOnAccountPage_Xpath = By.xpath("//div[@class='list-group']/a");
 
 
     public String getPageTitle() {
@@ -42,15 +46,32 @@ public class AccountPage {
     }
 
     public String getMyAccountHeaderText(String accountPageHeader) {
-        return elementUtil.doElementGetText(By.xpath("//div[@id='content']/h2[text()='"+accountPageHeader   +"']"));
+        By headerXpath = By.xpath("//div[@id='content']/h2[text()='" + accountPageHeader + "']");
+        elementUtil.waitForElementVisible(headerXpath, 10);
+        return elementUtil.doElementGetText(headerXpath);
 
     }
 
-    public List<String> getLinkFromMyAccountHeader(String expectedResult) {
-        return elementUtil.getElementTextList(elementUtil.getBy("XPATH", "//div[@id='content']/h2[text()='My Account']/following-sibling::ul[1]/li/a"));
+    public List<String> getLinkFromMyAccountHeader(String accountPageHeader, String expectedResult) {
+        ArrayList<String> arrayList = new ArrayList<>();
+        List<WebElement> elementList = elementUtil.getElements(By.xpath("//div[@id='content']/h2[text()='" + getMyAccountHeaderText(accountPageHeader) + "']/following-sibling::ul[1]/li/a"));
+        for (WebElement webElement : elementList) {
+            arrayList.add(webElement.getText());
+        }
 
+        return arrayList;
+    }
 
+    public List<String> getAllLinksFromMyAccountPage() {
+        elementUtil.waitForElementVisible(listOfLinksOnAccountPage_Xpath,10);
+        driver.navigate().refresh();
+        ArrayList<String> arrayList = new ArrayList<>();
+        List<WebElement> listOfElements = elementUtil.getElements(listOfLinksOnAccountPage_Xpath);
+        for (WebElement element : listOfElements) {
+            arrayList.add(element.getText());
+        }
 
+        return arrayList;
     }
 
 }

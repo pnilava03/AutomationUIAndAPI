@@ -1,0 +1,526 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <title>openCartApplication</title>
+    <link href="https://cdn.jsdelivr.net/gh/anshooarora/chaintest@976b9706b4d752a6262a041a68a6ea08012e0fcf/cdn/simple/version/chaintest-pkg.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <style></style>
+</head>
+
+<body data-bs-theme="dark">
+  <nav class="navbar border-bottom">
+    <div class="container d-flex justify-content-between">
+      <div>
+        <a class="navbar-brand" href="#">ChainTest</a>
+        <span class="ms-3 fs-6">Open Cart Automation Test</span>
+      </div>
+      <div>
+        <span class="badge badge-outline text-lg"><i class="bi bi-hourglass me-1"></i> 39s</span>
+        <span class="badge badge-outline text-lg"><i class="bi bi-clock me-1 text-success"></i> 2026-01-28 01:50:47 am</span>
+        <span class="badge badge-outline text-lg me-3"><i class="bi bi-clock me-1 text-danger"></i> 2026-01-28 01:51:27 am</span>
+          <button role="button" id="sys-info" class="btn btn-outline-primary smaller" title="View System Info">
+            <i class="bi bi-pc-display-horizontal"></i></button>
+        <button role="button" id="shortcuts" class="btn btn-outline-primary smaller" title="Shortcuts">
+          <i class="bi bi-info-circle"></i></button>
+      </div>
+    </div>
+  </nav>
+
+  <div id="summary" class="container-fluid bg-body-tertiary">
+    <!-- dashboard section -->
+    <div id="dashboard" class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-4">
+            <div class="card card-custom" style="height: 175px">
+              <div class="card-header">
+                Suites
+              </div>
+              <div class="card-body d-flex justify-content-center" style="height: 90px;">
+                <div class="chart-view center" style="margin-left: -1rem;">
+                  <canvas id="stats1"></canvas>
+                </div>
+              </div>
+              <div class="card-footer small">
+                <span id="sp1">1</span> Passed,
+                <span id="sf1">0</span> Failed,
+                <span id="ss1">0</span> Skipped
+              </div>
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="card card-custom" style="height: 175px">
+              <div class="card-header">
+                Classes
+              </div>
+              <div class="card-body d-flex justify-content-center" style="height: 90px;">
+                <div class="chart-view center" style="margin-left: -1rem;">
+                  <canvas id="stats2"></canvas>
+                </div>
+              </div>
+              <div class="card-footer small">
+                <span id="sp2">1</span> Passed,
+                <span id="sf2">0</span> Failed,
+                <span id="ss2">0</span> Skipped
+              </div>
+            </div>
+          </div>
+            <div class="col-4">
+              <div class="card card-custom" style="height: 175px">
+                <div class="card-header">
+                  Methods
+                </div>
+                <div class="card-body d-flex justify-content-center" style="height: 90px;">
+                  <div class="chart-view center" style="margin-left: -1rem;">
+                    <canvas id="stats3"></canvas>
+                  </div>
+                </div>
+                <div class="card-footer small">
+                  <span id="sp3">6</span> Passed,
+                  <span id="sf3">0</span> Failed,
+                  <span id="ss3">0</span> Skipped
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+    <!-- /dashboard section -->
+
+    <!-- tag section -->
+      <div id="tags" class="container pb-5">
+        <div class="card card-custom">
+          <div class="card-header">
+            Tags
+          </div>
+          <div class="card-body">
+            <table id="tag-summary" class="table">
+              <thead>
+                <tr>
+                  <th scope="col" style="width:65%"></th>
+                  <th scope="col">Total</th>
+                  <th scope="col">Passed</th>
+                  <th scope="col">Failed</th>
+                  <th scope="col">Time</th>
+                </tr>
+              </thead>
+              <tbody>
+                  <tr>
+                    <td><a href="#" class="secondary tag">cucumber</a></td>
+                    <td>6</td>
+                    <td>6</td>
+                    <td>0</td>
+                    <td>38s</td>
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="border-bottom"></div>
+    <!-- /tag section -->
+  </div>
+
+  <div class="container-fluid">
+    <div class="py-3 mb-5">
+      <div class="container d-flex justify-content-between">
+        <div class="input-group">
+          <input type="text" id="q" class="form-control border" placeholder="Search..." aria-label="Search...">
+          <button class="btn border btn-sm text-success status-filter" id="passed" type="button">Passed</button>
+          <button class="btn border btn-sm text-warning status-filter" id="skipped" type="button">Skipped</button>
+          <button class="btn border btn-sm text-danger status-filter" id="failed" type="button">Failed</button>
+          <button id="clear-filters" class="btn border btn-sm"><i class="bi bi-x-lg me-1"></i>Clear all filters</button>
+          <button type="button" id="summary-toggle" class="btn border btn-sm"><i class="bi bi-toggle-on me-1"></i> Toggle Summary Section</button>
+        </div>
+      </div>
+    </div>
+      <div class="test-container passed">
+        <div class="container">
+          <div class="row">
+            <div class="col-4">
+              <h6 class="mb-3 testname fs-6 passed">Opencart App Test Regression Suite</h6>
+              <div class="small">
+                <span class="badge badge-outline"><i class="bi bi-hourglass me-1"></i> 39s</span>
+                <span class="badge text-bg-info"><i class="bi bi-clock me-1"></i>
+                  2026-01-28 01:50:47 am</span>
+                <span class="badge text-bg-warning"><i class="bi bi-clock me-1"></i>
+                  2026-01-28 01:51:27 am</span>
+              </div>
+                <div class="my-2">
+                    <span class="badge rounded-pill text-bg-secondary">cucumber</span>
+                </div>
+              
+            </div>
+            <div class="col-8">
+                <div class="card mb-3 result passed">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                          <i class="bi bi-check-circle-fill text-success"></i>
+                        <span class="fs-6 ms-2">com.qa.opencart.Runner.TestRunner</span>
+                      </div>
+                      <div>
+                          <span class="tag-list">
+                              <span class="badge rounded-pill text-bg-secondary">cucumber</span>
+                          </span>
+                          <span class="mx-1">&middot;</span>
+                        <span class="badge text-dark bg-light">39s</span>
+                      </div>
+                    </div>
+                    
+  <div class="mt-3 border-top">
+    <div class="leaf passed pb-1 logs-toggle">
+      <div class="d-flex justify-content-between mt-3">
+        <div>
+            <i class="bi bi-check-circle-fill text-success"></i>
+          <span class="fs-6 ms-2">runScenario <i role="button" class="bi bi-caret-down-fill text-muted small"></i></span>
+        </div>
+        <div>
+            <span class="tag-list">
+                <span class="badge rounded-pill text-bg-secondary">cucumber</span>
+            </span>
+            <span class="mx-1">&middot;</span>
+          <span class="badge text-dark bg-light">7s</span>
+        </div>
+      </div>
+      <p class="desc">Runs Cucumber Scenarios<br>["Verify My Account page is displayed successfully", "OpenCart My Account Page"]</p>
+        <div class="mt-3 logs d-none">
+          <pre class="pb-0">
+UserName is :: palnilava1930@gmail.com
+Password is :: admin
+Attaching screenshot to ChainTest...
+          </pre>
+        </div>
+        <div class="row mt-3">
+            <div class="embed col-2 mb-1">
+              <img src="resources/0ab26d09-e180-4e91-b212-02e48805cf0c.png" />
+            </div>
+        </div>
+    </div>
+    <div class="leaf passed pb-1 logs-toggle">
+      <div class="d-flex justify-content-between mt-3">
+        <div>
+            <i class="bi bi-check-circle-fill text-success"></i>
+          <span class="fs-6 ms-2">runScenario <i role="button" class="bi bi-caret-down-fill text-muted small"></i></span>
+        </div>
+        <div>
+            <span class="tag-list">
+                <span class="badge rounded-pill text-bg-secondary">cucumber</span>
+            </span>
+            <span class="mx-1">&middot;</span>
+          <span class="badge text-dark bg-light">6s</span>
+        </div>
+      </div>
+      <p class="desc">Runs Cucumber Scenarios<br>["Verify available Links on My Account Header", "OpenCart My Account Page"]</p>
+        <div class="mt-3 logs d-none">
+          <pre class="pb-0">
+UserName is :: palnilava1930@gmail.com
+Password is :: admin
+Actual Header is:: My Account
+Verifying All links under the My Account Header
+All actual links [Edit your account information, Change your password, Modify your address book entries, Modify your wish list] are Successfully verified
+Verifying All links under the My Account Header
+All actual links [Edit your account information, Change your password, Modify your address book entries, Modify your wish list] are Successfully verified
+Verifying All links under the My Account Header
+All actual links [Edit your account information, Change your password, Modify your address book entries, Modify your wish list] are Successfully verified
+Verifying All links under the My Account Header
+All actual links [Edit your account information, Change your password, Modify your address book entries, Modify your wish list] are Successfully verified
+Attaching screenshot to ChainTest...
+          </pre>
+        </div>
+        <div class="row mt-3">
+            <div class="embed col-2 mb-1">
+              <img src="resources/68cc43de-d7f4-48d9-be7b-deb29126edf7.png" />
+            </div>
+        </div>
+    </div>
+    <div class="leaf passed pb-1 logs-toggle">
+      <div class="d-flex justify-content-between mt-3">
+        <div>
+            <i class="bi bi-check-circle-fill text-success"></i>
+          <span class="fs-6 ms-2">runScenario <i role="button" class="bi bi-caret-down-fill text-muted small"></i></span>
+        </div>
+        <div>
+            <span class="tag-list">
+                <span class="badge rounded-pill text-bg-secondary">cucumber</span>
+            </span>
+            <span class="mx-1">&middot;</span>
+          <span class="badge text-dark bg-light">6s</span>
+        </div>
+      </div>
+      <p class="desc">Runs Cucumber Scenarios<br>["Verify available Links on My Orders Header", "OpenCart My Account Page"]</p>
+        <div class="mt-3 logs d-none">
+          <pre class="pb-0">
+UserName is :: palnilava1930@gmail.com
+Password is :: admin
+Actual Header is:: My Orders
+Verifying All links under the My Orders Header
+All actual links [View your order history, Downloads, Your Reward Points, View your return requests, Your Transactions, Recurring payments] are Successfully verified
+Verifying All links under the My Orders Header
+All actual links [View your order history, Downloads, Your Reward Points, View your return requests, Your Transactions, Recurring payments] are Successfully verified
+Verifying All links under the My Orders Header
+All actual links [View your order history, Downloads, Your Reward Points, View your return requests, Your Transactions, Recurring payments] are Successfully verified
+Verifying All links under the My Orders Header
+All actual links [View your order history, Downloads, Your Reward Points, View your return requests, Your Transactions, Recurring payments] are Successfully verified
+Verifying All links under the My Orders Header
+All actual links [View your order history, Downloads, Your Reward Points, View your return requests, Your Transactions, Recurring payments] are Successfully verified
+Verifying All links under the My Orders Header
+All actual links [View your order history, Downloads, Your Reward Points, View your return requests, Your Transactions, Recurring payments] are Successfully verified
+Attaching screenshot to ChainTest...
+          </pre>
+        </div>
+        <div class="row mt-3">
+            <div class="embed col-2 mb-1">
+              <img src="resources/3ef4819c-d96e-4924-b464-6d5347859902.png" />
+            </div>
+        </div>
+    </div>
+    <div class="leaf passed pb-1 logs-toggle">
+      <div class="d-flex justify-content-between mt-3">
+        <div>
+            <i class="bi bi-check-circle-fill text-success"></i>
+          <span class="fs-6 ms-2">runScenario <i role="button" class="bi bi-caret-down-fill text-muted small"></i></span>
+        </div>
+        <div>
+            <span class="tag-list">
+                <span class="badge rounded-pill text-bg-secondary">cucumber</span>
+            </span>
+            <span class="mx-1">&middot;</span>
+          <span class="badge text-dark bg-light">6s</span>
+        </div>
+      </div>
+      <p class="desc">Runs Cucumber Scenarios<br>["Verify available Links on My Affiliate Account Header", "OpenCart My Account Page"]</p>
+        <div class="mt-3 logs d-none">
+          <pre class="pb-0">
+UserName is :: palnilava1930@gmail.com
+Password is :: admin
+Actual Header is:: My Affiliate Account
+Verifying All links under the My Affiliate Account Header
+All actual links [Register for an affiliate account] are Successfully verified
+Attaching screenshot to ChainTest...
+          </pre>
+        </div>
+        <div class="row mt-3">
+            <div class="embed col-2 mb-1">
+              <img src="resources/cfce2207-e7f8-4940-a174-ae29433dc2cb.png" />
+            </div>
+        </div>
+    </div>
+    <div class="leaf passed pb-1 logs-toggle">
+      <div class="d-flex justify-content-between mt-3">
+        <div>
+            <i class="bi bi-check-circle-fill text-success"></i>
+          <span class="fs-6 ms-2">runScenario <i role="button" class="bi bi-caret-down-fill text-muted small"></i></span>
+        </div>
+        <div>
+            <span class="tag-list">
+                <span class="badge rounded-pill text-bg-secondary">cucumber</span>
+            </span>
+            <span class="mx-1">&middot;</span>
+          <span class="badge text-dark bg-light">5s</span>
+        </div>
+      </div>
+      <p class="desc">Runs Cucumber Scenarios<br>["Verify available Links on Newsletter Header", "OpenCart My Account Page"]</p>
+        <div class="mt-3 logs d-none">
+          <pre class="pb-0">
+UserName is :: palnilava1930@gmail.com
+Password is :: admin
+Actual Header is:: Newsletter
+Verifying All links under the Newsletter Header
+All actual links [Subscribe / unsubscribe to newsletter] are Successfully verified
+Attaching screenshot to ChainTest...
+          </pre>
+        </div>
+        <div class="row mt-3">
+            <div class="embed col-2 mb-1">
+              <img src="resources/23286c85-3957-479e-97d9-9ab032d244ff.png" />
+            </div>
+        </div>
+    </div>
+    <div class="leaf passed pb-1 logs-toggle">
+      <div class="d-flex justify-content-between mt-3">
+        <div>
+            <i class="bi bi-check-circle-fill text-success"></i>
+          <span class="fs-6 ms-2">runScenario <i role="button" class="bi bi-caret-down-fill text-muted small"></i></span>
+        </div>
+        <div>
+            <span class="tag-list">
+                <span class="badge rounded-pill text-bg-secondary">cucumber</span>
+            </span>
+            <span class="mx-1">&middot;</span>
+          <span class="badge text-dark bg-light">6s</span>
+        </div>
+      </div>
+      <p class="desc">Runs Cucumber Scenarios<br>["Verify All links Account Page right hand side", "OpenCart My Account Page"]</p>
+        <div class="mt-3 logs d-none">
+          <pre class="pb-0">
+UserName is :: palnilava1930@gmail.com
+Password is :: admin
+Expected List size :13 And Actual List Size :13
+Verified ActualLinks and ExpectedLinks from Account Page[My Account, Edit Account, Password, Address Book, Wish List, Order History, Downloads, Recurring payments, Reward Points, Returns, Transactions, Newsletter, Logout] 
+[My Account, Edit Account, Password, Address Book, Wish List, Order History, Downloads, Recurring payments, Returns, Reward Points, Transactions, Newsletter, Logout]
+Attaching screenshot to ChainTest...
+          </pre>
+        </div>
+        <div class="row mt-3">
+            <div class="embed col-2 mb-1">
+              <img src="resources/76f85c5a-05b4-4ab4-ac5b-1763d12204db.png" />
+            </div>
+        </div>
+    </div>
+  </div>
+
+                  </div>
+                </div>
+            </div>
+          </div>
+        </div>
+          <div class="border-bottom py-5"></div>
+      </div>
+  </div>
+
+  <script>
+    const stats1Annotation = {'total': 1, 'passed': 1};
+    const stats1 = [
+      { result: 'Passed', count: 1, bg: 'rgb(140, 197, 83)' },
+      { result: 'Failed', count: 0, bg: 'rgb(233,80,113)' },
+      { result: 'Skipped', count: 0, bg: 'rgb(13, 202, 240)' }
+    ];
+      const stats2Annotation = {'total': 1, 'passed': 1};
+      const stats2 = [
+        { result: 'Passed', count: 1, bg: 'rgb(140, 197, 83)' },
+        { result: 'Failed', count: 0, bg: 'rgb(233,80,113)' },
+        { result: 'Skipped', count: 0, bg: 'rgb(13, 202, 240)' }
+      ];
+      const stats3Annotation = {'total': 6, 'passed': 6};
+      const stats3 = [
+        { result: 'Passed', count: 6, bg: 'rgb(140, 197, 83)' },
+        { result: 'Failed', count: 0, bg: 'rgb(233,80,113)' },
+        { result: 'Skipped', count: 0, bg: 'rgb(13, 202, 240)' }
+      ];
+     
+  </script>
+    <script src="https://cdn.jsdelivr.net/gh/anshooarora/chaintest@976b9706b4d752a6262a041a68a6ea08012e0fcf/cdn/simple/version/chaintest-pkg.js"></script>
+
+    <div id="sys-info-modal" class="modal" tabindex="-1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h6 class="modal-title">System</h6>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+              onclick="toggleSysInfo(false)"></button>
+          </div>
+          <div class="modal-body">
+            <table class="table">
+              <tbody>
+                  <tr>
+                    <td>java.version</td>
+                    <td>25.0.1</td>
+                  </tr>
+                  <tr>
+                    <td>java.vm.name</td>
+                    <td>OpenJDK 64-Bit Server VM</td>
+                  </tr>
+                  <tr>
+                    <td>java.vm.vendor</td>
+                    <td>Oracle Corporation</td>
+                  </tr>
+                  <tr>
+                    <td>java.class.version</td>
+                    <td>69.0</td>
+                  </tr>
+                  <tr>
+                    <td>java.runtime.name</td>
+                    <td>OpenJDK Runtime Environment</td>
+                  </tr>
+                  <tr>
+                    <td>os.name</td>
+                    <td>Windows 11</td>
+                  </tr>
+                  <tr>
+                    <td>os.arch</td>
+                    <td>amd64</td>
+                  </tr>
+                  <tr>
+                    <td>os.version</td>
+                    <td>10.0</td>
+                  </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+              onclick="toggleSysInfo(false)">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <div id="info-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title">ChainTest Simple Generator - Shortcuts</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            onclick="toggleInfoModal(false)"></button>
+        </div>
+        <div class="modal-body">
+          <table class="table">
+            <tbody>
+                <tr>
+                  <td>p</td>
+                  <td>Toggle passed tests</td>
+                </tr>
+                <tr>
+                  <td>s</td>
+                  <td>Toggle skipped tests</td>
+                </tr>
+                <tr>
+                  <td>L</td>
+                  <td>Toggle theme (light/dark)</td>
+                </tr>
+                <tr>
+                  <td>esc</td>
+                  <td>Reset all filters</td>
+                </tr>
+                <tr>
+                  <td>f</td>
+                  <td>Toggle failed tests</td>
+                </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+            onclick="toggleInfoModal(false)">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="attachment-modal" class="modal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title">Attachment</h6>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+            onclick="toggleAttachmentModal(false)"></button>
+        </div>
+        <div class="modal-body">
+          <img src="" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+            onclick="toggleAttachmentModal(false)">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

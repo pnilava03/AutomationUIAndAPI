@@ -1,0 +1,10 @@
+com\qa\opencart\utils\PropertiesFile.class
+com\qa\opencart\exceptions\EnvironmentException.class
+com\qa\opencart\utils\APISpecifications.class
+com\qa\opencart\utils\JavaScriptUtil.class
+com\qa\opencart\driverManager\DriverFactory.class
+com\qa\opencart\enums\PriorityType.class
+com\qa\opencart\constants\AppConstant.class
+com\qa\opencart\utils\ElementUtil.class
+com\qa\opencart\enums\EnvironmentType.class
+com\qa\opencart\utils\ReportsUtil.class

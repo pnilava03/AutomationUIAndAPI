@@ -7,9 +7,6 @@ import com.qa.opencart.APIRequests.UpdateComments;
 import com.qa.opencart.utils.APISpecifications;
 import io.restassured.RestAssured;
 import io.restassured.path.json.JsonPath;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
-import io.restassured.specification.ResponseSpecification;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
 
@@ -51,7 +48,6 @@ public class CreateIssue {
 
     @Test(priority = 1, dependsOnMethods = "createNewBug")
     public void createComment() {
-
         String response = RestAssured.given().spec(APISpecifications.createIssueSpecs())
                 .log().all().body(issueComment)
                 .when().log().all()
@@ -68,7 +64,6 @@ public class CreateIssue {
 
     @Test(priority = 2, dependsOnMethods = "createComment")
     public void updateComments() {
-
         String response = RestAssured.given().log().all().spec(APISpecifications.createIssueSpecs())
                 .body(issueCommentUpdate)
                 .when().log().all()
