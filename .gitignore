@@ -1,8 +1,8 @@
 /bin          # Compiled binaries (IDE output)
-target       # Maven build output
+/target       # Maven build output
 .classpath     # Eclipse config
 .project       # Eclipse project config
 .settings      # Eclipse workspace settings
 .idea         # IntelliJ project settings
 *.iml          # IntelliJ module files
-logs          # Runtime logs
+/logs          # Runtime logs
