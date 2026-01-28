@@ -91,7 +91,6 @@ public class AccountPageStep {
                 throw new NoHeaderFoundExceptions("Header not found exceptions");
         }
 
-
     }
 
     @Then("I should see All links")
