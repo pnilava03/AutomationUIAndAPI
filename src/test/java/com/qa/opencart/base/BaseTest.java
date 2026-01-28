@@ -41,6 +41,10 @@ public class BaseTest {
             driver.get(propertiesFile.getPropertiesValue("Application_URL"));
         } else if (propertiesFile.getPropertiesValue("EnvType").trim().toLowerCase().equalsIgnoreCase(EnvironmentType.PROD.toString())) {
             driver.get(propertiesFile.getPropertiesValue("Application_URL"));
+        } else if (propertiesFile.getPropertiesValue("EnvType").trim().equalsIgnoreCase(EnvironmentType.STAGE.toString())) {
+            driver.get(propertiesFile.getPropertiesValue("Application_URL"));
+        } else if (propertiesFile.getPropertiesValue("EnvType").trim().equalsIgnoreCase(EnvironmentType.UAT.toString())) {
+            driver.get(propertiesFile.getPropertiesValue("Application_URL"));
         } else {
             throw new EnvironmentException("Environment not found ...");
         }

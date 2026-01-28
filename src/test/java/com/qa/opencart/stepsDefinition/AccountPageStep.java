@@ -23,6 +23,7 @@ public class AccountPageStep {
     String actualResult;
 
 
+
     @Given("I am logged into OpenCart with valid credentials")
     public void iAmLoggedIntoOpenCartWithValidCredentials(DataTable credentials) {
         loginPage = new LoginPage(DriverFactory.getInstance(propertiesFile.getPropertiesValue("Browser")).getDriver());
