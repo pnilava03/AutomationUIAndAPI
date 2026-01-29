@@ -19,7 +19,7 @@ import org.testng.annotations.*;
         features = "./src/test/resources/features",
         glue = {"com.qa.opencart.stepsDefinition", "com.qa.opencart.base"},
         plugin = {"pretty", "html:target/cucumber-report.html"},
-        tags = " @account",
+        tags = "@account",
         monochrome = true)
 
 @Listeners({ com.aventstack.chaintest.plugins.ChainTestListener.class })
