@@ -59,6 +59,15 @@ public class AccountPage {
             arrayList.add(webElement.getText());
         }
 
+        String myAffiliateHeaderText=elementUtil.doElementGetText(By.xpath("//div[@id='content']/div/h2[text()='My Affiliate Account']"));
+
+        if(myAffiliateHeaderText.equals(accountPageHeader)){
+            elementList = elementUtil.getElements(By.xpath("//div[@id='content']/div/h2[text()='"+getMyAccountHeaderText(accountPageHeader)+"']/following-sibling::div/a"));
+            for (WebElement webElement : elementList) {
+                arrayList.add(webElement.getText());
+            }
+        }
+
         return arrayList;
     }
 

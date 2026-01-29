@@ -24,7 +24,8 @@ public class AppConstant {
             List.of("Edit your account information",
                     "Change your password",
                     "Modify your address book entries",
-                    "Modify your wish list");
+                    "Modify your wish list",
+                    "Subscribe / unsubscribe to newsletter");
 
     public static final List<String> MYORDERS_HEADER_LINK_LIST =
             List.of("View your order history",

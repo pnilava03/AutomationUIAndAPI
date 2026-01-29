@@ -21,6 +21,7 @@ Feature: OpenCart My Account Page
     And I should see "Change your password" link
     And I should see "Modify your address book entries" link
     And I should see "Modify your wish list" link
+    And I should see "Subscribe / unsubscribe to newsletter" link
 
 
   @regression @account
@@ -38,10 +39,6 @@ Feature: OpenCart My Account Page
     Then I should see "My Affiliate Account" header section
     Then I should see "Register for an affiliate account" link
 
-  @regression @account
-  Scenario: Verify available Links on Newsletter Header
-    Then I should see "Newsletter" header section
-    Then I should see "Subscribe / unsubscribe to newsletter" link
 
 
   @regression @account
@@ -52,11 +49,12 @@ Feature: OpenCart My Account Page
       | Password           |
       | Address Book       |
       | Wish List          |
+      |Notification        |
       | Order History      |
       | Downloads          |
       | Recurring payments |
-      | Returns            |
       | Reward Points      |
+      | Returns            |
       | Transactions       |
       | Newsletter         |
       | Logout             |
