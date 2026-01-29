@@ -5,7 +5,7 @@ pipeline {
         choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: 'Select Browser')
         choice(name: 'ENV', choices: ['Dev','QA', 'Stage', 'uat','PROD'], description: 'Select Environment')
         choice(name: 'HEADLESS', choices: ['true', 'false'], description: 'Run in headless mode?')
-
+        choice(name: 'TEST_SUITE', choices: ['smoke.xml', 'testNG.xml','negative.xml'], description: 'Which test Suite You want to run?')
 }
 
     environment {
@@ -72,10 +72,22 @@ steps {
             }
         }
 
+         stage('Execute Smoke Tests') {
+          steps {
+         bat """
+         mvn test ^
+         -DtestSuite="smoke.xml" ^
+          -Dbrowser=${params.BROWSER} ^
+          -Denv=${params.ENV}
+          """
+           }
+        }
+
         stage('Execute Functional Tests') {
                             steps {
                                 bat """
                                     mvn test ^
+                                     -DtestSuite=negative.xml ^
                                     -Dbrowser=${params.BROWSER} ^
                                     -Denv=${params.ENV}
                                 """
@@ -88,6 +100,7 @@ steps {
                         bat """
 
                             mvn test ^
+                             -DtestSuite=testNG.xml ^
                             -Dbrowser=${params.BROWSER} ^
                             -Denv=${params.ENV}
                         """

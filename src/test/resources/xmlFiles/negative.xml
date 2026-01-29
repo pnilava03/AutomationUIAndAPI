@@ -7,7 +7,7 @@
         <listener class-name="com.aventstack.chaintest.plugins.ChainTestListener"/>
     </listeners>
 
-    <test name="Login Page Test_Chrome">
+    <test name="Login Page Test_Negative">
         <parameter name="browser" value="chrome" />
         <classes>
             <class name="com.qa.opencart.Runner.TestRunnerNegative" />

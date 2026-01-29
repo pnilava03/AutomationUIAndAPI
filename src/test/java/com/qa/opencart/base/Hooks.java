@@ -43,12 +43,12 @@ public class Hooks {
 
     @After(order = 0)
     public void tearDown(Scenario scenario) {
-
         if (scenario.getStatus() == Status.PASSED) {
             TestLogger.log("Attaching screenshot to ChainTest...");
             byte[] bytes = ReportsUtil.takeScreenshotAsByte();
             if (bytes != null) {
                 ChainTestListener.embed(bytes, "image/png");
+
             }
 
         }else{
