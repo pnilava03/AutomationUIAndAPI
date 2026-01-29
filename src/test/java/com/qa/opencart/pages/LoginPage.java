@@ -21,7 +21,7 @@ public class LoginPage {
     private final By password_Id=By.id("input-password");
     private final By forgotten_password_LinkText=By.linkText("Forgotten Password");
     private final By loginButton_Xpath=By.xpath("//input[@type='submit']");
-    private final By alertMessage_Xpath=By.xpath("//div[@class='alert alert-danger alert-dismissible']");
+    private final By alertMessage_Xpath=By.xpath("//div[@class='alert alert-danger alert-dismissible']/i");
 
     public String getPageTitle(){
       return elementUtil.waitForTitleIs("Account Login", AppConstant.LONG_TIME_OUT);
@@ -59,6 +59,7 @@ public class LoginPage {
     }
 
     public String alertMessage(String str){
+        elementUtil.waitForElementVisible(alertMessage_Xpath,30);
          return  elementUtil.doElementGetText(alertMessage_Xpath);
     }
 
