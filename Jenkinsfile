@@ -116,7 +116,7 @@ steps {
             steps {
                 archiveArtifacts artifacts: '**/target/**/*.*', fingerprint: true
             }
-        }
+     }
 
 
  stage('Publish ChainTest Report') {
