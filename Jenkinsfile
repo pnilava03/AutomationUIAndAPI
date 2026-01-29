@@ -74,22 +74,26 @@ steps {
 
          stage('Execute Smoke Tests') {
           steps {
+          catchError(buildResult: 'FAILURE', stageResult: 'FAILURE')
          bat """
          mvn test ^
          -DtestSuite="smoke.xml" ^
           -Dbrowser=${params.BROWSER} ^
-          -Denv=${params.ENV}
+          -Denv=${params.ENV} ^
+          -Dheadless=true
           """
            }
         }
 
         stage('Execute Functional Tests') {
                             steps {
+                             catchError(buildResult: 'FAILURE', stageResult: 'FAILURE')
                                 bat """
                                     mvn test ^
                                      -DtestSuite=negative.xml ^
                                     -Dbrowser=${params.BROWSER} ^
-                                    -Denv=${params.ENV}
+                                    -Denv=${params.ENV} ^
+                                     -Dheadless=true
                                 """
                             }
                         }
@@ -97,12 +101,14 @@ steps {
 
           stage('Execute Regression Tests') {
                     steps {
+                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE')
                         bat """
 
                             mvn test ^
                              -DtestSuite=testNG.xml ^
                             -Dbrowser=${params.BROWSER} ^
-                            -Denv=${params.ENV}
+                            -Denv=${params.ENV} ^
+                             -Dheadless=true
                         """
                     }
                 }
@@ -125,7 +131,7 @@ steps {
 publishHTML(target: [
  reportDir: 'target/chaintest',
     reportFiles: 'Index.html,Email.html',
-        reportName: 'ChainTest Automation Report',
+     reportName: 'ChainTest Automation Report',
       keepAll: true,
        alwaysLinkToLastBuild: true,
          allowMissing: true
