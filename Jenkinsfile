@@ -127,19 +127,6 @@ publishHTML(target: [
                         ])
                     }
                 }
-
-          stage('Publish ChainTest Report') {
-          steps {
-          publishHTML(target: [
-           reportDir: 'target/chaintest',
-              reportFiles: 'Email.html',
-                  reportName: 'ChainTest Automation Report',
-                keepAll: true,
-                 alwaysLinkToLastBuild: true,
-                   allowMissing: true
-                                  ])
-                              }
-                          }
     }
 
     post {
