@@ -75,8 +75,8 @@ steps {
         stage('Execute Sanity/Smoke Tests') {
             steps {
                 bat """
-                    -DsuiteXmlFile=src/test/resources/xmlFiles/smoke.xml ^
                     mvn test ^
+                     -DsuiteXmlFile=src/test/resources/xmlFiles/smoke.xml ^
                     -Dbrowser=${params.BROWSER} ^
                     -Denv=${params.ENV}
                 """
@@ -86,8 +86,8 @@ steps {
         stage('Execute Functional Tests') {
                             steps {
                                 bat """
-                               -DsuiteXmlFile=src/test/resources/xmlFiles/negative.xml ^
                                     mvn test ^
+                                    -DsuiteXmlFile=src/test/resources/xmlFiles/negative.xml ^
                                     -Dbrowser=${params.BROWSER} ^
                                     -Denv=${params.ENV}
                                 """
@@ -98,8 +98,9 @@ steps {
           stage('Execute Regression Tests') {
                     steps {
                         bat """
-                         -DsuiteXmlFile=src/test/resources/xmlFiles/testNG.xml ^
+
                             mvn test ^
+                            -DsuiteXmlFile=src/test/resources/xmlFiles/testNG.xml ^
                             -Dbrowser=${params.BROWSER} ^
                             -Denv=${params.ENV}
                         """
