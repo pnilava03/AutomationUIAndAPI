@@ -22,8 +22,8 @@ public class AccountPage {
     }
 
     private final By list_group_Xpath = By.xpath("//div[@class='list-group']/a");
-    private final By header_Xpath = By.xpath("//div[@id='content']/h2");
-    private final By listOfLinksOnAccountPage_Xpath = By.xpath("//div[@class='list-group']/a");
+    private final By header_Xpath = By.xpath("//div[@id='content']/div/h2");
+    private final By listOfLinksOnAccountPage_Xpath = By.xpath("//div[@class='list-group mb-3']/a");
 
 
     public String getPageTitle() {
@@ -46,7 +46,7 @@ public class AccountPage {
     }
 
     public String getMyAccountHeaderText(String accountPageHeader) {
-        By headerXpath = By.xpath("//div[@id='content']/h2[text()='" + accountPageHeader + "']");
+        By headerXpath = By.xpath("//div[@id='content']/div/h2[text()='" + accountPageHeader + "']");
         elementUtil.waitForElementVisible(headerXpath, 10);
         return elementUtil.doElementGetText(headerXpath);
 
@@ -54,7 +54,7 @@ public class AccountPage {
 
     public List<String> getLinkFromMyAccountHeader(String accountPageHeader, String expectedResult) {
         ArrayList<String> arrayList = new ArrayList<>();
-        List<WebElement> elementList = elementUtil.getElements(By.xpath("//div[@id='content']/h2[text()='" + getMyAccountHeaderText(accountPageHeader) + "']/following-sibling::ul[1]/li/a"));
+        List<WebElement> elementList = elementUtil.getElements(By.xpath("//div[@id='content']/div/h2[text()='"+getMyAccountHeaderText(accountPageHeader)+"']/following-sibling::div/div/div/a"));
         for (WebElement webElement : elementList) {
             arrayList.add(webElement.getText());
         }
