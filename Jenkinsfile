@@ -46,6 +46,7 @@ pipeline {
 stage('Clean Workspace') {
 steps {
   cleanWs()
+  echo("Clean Workspace")
     }
     }
 
@@ -122,10 +123,23 @@ publishHTML(target: [
         reportName: 'ChainTest Automation Report',
       keepAll: true,
        alwaysLinkToLastBuild: true,
-         allowMissing: false
+         allowMissing: true
                         ])
                     }
                 }
+
+          stage('Publish ChainTest Report') {
+          steps {
+          publishHTML(target: [
+           reportDir: 'target/chaintest',
+              reportFiles: 'Email.html',
+                  reportName: 'ChainTest Automation Report',
+                keepAll: true,
+                 alwaysLinkToLastBuild: true,
+                   allowMissing: true
+                                  ])
+                              }
+                          }
     }
 
     post {
