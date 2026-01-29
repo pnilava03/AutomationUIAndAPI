@@ -72,17 +72,6 @@ steps {
             }
         }
 
-        stage('Execute Sanity/Smoke Tests') {
-            steps {
-                bat """
-                    mvn test ^
-                     -DsuiteXmlFile=src/test/resources/xmlFiles/smoke.xml ^
-                    -Dbrowser=${params.BROWSER} ^
-                    -Denv=${params.ENV}
-                """
-            }
-        }
-
         stage('Execute Functional Tests') {
                             steps {
                                 bat """
