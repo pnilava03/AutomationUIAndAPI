@@ -5,7 +5,7 @@ pipeline {
         choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: 'Select Browser')
         choice(name: 'ENV', choices: ['Dev','QA', 'Stage', 'uat','PROD'], description: 'Select Environment')
         choice(name: 'HEADLESS', choices: ['true', 'false'], description: 'Run in headless mode?')
-        choice(name: 'TEST_SUITE',choices: ['testNG.xml', 'smoke.xml', 'negative.xml'],description: 'Select Test Suite XML'
+        choice(name: 'TEST_SUITE',choices: ['testNG.xml', 'smoke.xml', 'negative.xml'],description: 'Select Test Suite XML')
 }
 
     environment {
