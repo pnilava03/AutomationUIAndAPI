@@ -5,7 +5,8 @@ pipeline {
         choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: 'Select Browser')
         choice(name: 'ENV', choices: ['Dev','QA', 'Stage', 'uat','PROD'], description: 'Select Environment')
         choice(name: 'HEADLESS', choices: ['true', 'false'], description: 'Run in headless mode?')
-    }
+        choice(name: 'TEST_SUITE',choices: ['testNG.xml', 'smoke.xml', 'negative.xml'],description: 'Select Test Suite XML'
+}
 
     environment {
         MAVEN_OPTS = "-Xmx1024m"
@@ -71,9 +72,10 @@ steps {
             }
         }
 
-        stage('Execute Sanity Tests') {
+        stage('Execute Sanity/Smoke Tests') {
             steps {
                 bat """
+                    -DsuiteXmlFile=src/test/resources/xmlFiles/smoke.xml ^
                     mvn test ^
                     -Dbrowser=${params.BROWSER} ^
                     -Denv=${params.ENV}
@@ -84,6 +86,7 @@ steps {
         stage('Execute Functional Tests') {
                             steps {
                                 bat """
+                               -DsuiteXmlFile=src/test/resources/xmlFiles/negative.xml ^
                                     mvn test ^
                                     -Dbrowser=${params.BROWSER} ^
                                     -Denv=${params.ENV}
@@ -95,6 +98,7 @@ steps {
           stage('Execute Regression Tests') {
                     steps {
                         bat """
+                         -DsuiteXmlFile=src/test/resources/xmlFiles/testNG.xml ^
                             mvn test ^
                             -Dbrowser=${params.BROWSER} ^
                             -Denv=${params.ENV}
