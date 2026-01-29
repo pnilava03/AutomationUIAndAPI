@@ -52,5 +52,4 @@ public class AccountTest extends BaseTest {
         }
     }
 
-
 }
