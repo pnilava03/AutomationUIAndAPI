@@ -74,7 +74,6 @@ steps {
 
          stage('Execute Smoke Tests') {
           steps {
-          catchError(buildResult: 'FAILURE', stageResult: 'FAILURE')
          bat """
          mvn test ^
          -DtestSuite="smoke.xml" ^
@@ -87,7 +86,6 @@ steps {
 
         stage('Execute Functional Tests') {
                             steps {
-                             catchError(buildResult: 'FAILURE', stageResult: 'FAILURE')
                                 bat """
                                     mvn test ^
                                      -DtestSuite=negative.xml ^
@@ -101,7 +99,6 @@ steps {
 
           stage('Execute Regression Tests') {
                     steps {
-                     catchError(buildResult: 'FAILURE', stageResult: 'FAILURE')
                         bat """
 
                             mvn test ^
