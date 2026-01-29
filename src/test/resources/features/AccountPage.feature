@@ -37,7 +37,7 @@ Feature: OpenCart My Account Page
   @regression @account
   Scenario: Verify available Links on My Affiliate Account Header
     Then I should see "My Affiliate Account" header section
-    Then I should see "Register for an affiliate account" link
+    Then I should see "Register for an affiliate account1" link
 
 
 

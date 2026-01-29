@@ -123,25 +123,19 @@ steps {
      }
 
 
- stage('Publish ChainTest Report') {
-steps {
-publishHTML(target: [
- reportDir: 'target/chaintest',
-    reportFiles: 'Index.html,Email.html',
-     reportName: 'ChainTest Automation Report',
-      keepAll: true,
-       alwaysLinkToLastBuild: true,
-         allowMissing: true
-                        ])
-                    }
-                }
-    }
+ post {
+   always {
+     junit testResults: '**/target/surefire-reports/*.xml, **/target/testng-results.xml, **/target/surefire-reports/testng-results.xml',
+          allowEmptyResults: true
 
-    post {
-        always {
-            junit '**/target/surefire-reports/*.xml'
-            echo 'Pipeline Execution Completed'
-        }
+     publishHTML(target: [
+       reportDir: 'target/chaintest',
+       reportFiles: 'Index.html,Email.html',
+       reportName: 'ChainTest Automation Report',
+       keepAll: true,
+       alwaysLinkToLastBuild: true,
+       allowMissing: true
+     ])
 
         success {
             echo 'Build Successful'
