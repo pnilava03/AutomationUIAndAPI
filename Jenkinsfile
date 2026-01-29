@@ -118,8 +118,7 @@ steps {
 steps {
 publishHTML(target: [
  reportDir: 'target/chaintest',
-     reportFiles: 'Index.html',
-     reportFiles: 'Email.html',
+    reportFiles: 'Index.html,Email.html',
         reportName: 'ChainTest Automation Report',
       keepAll: true,
        alwaysLinkToLastBuild: true,
