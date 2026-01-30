@@ -9,7 +9,7 @@ pipeline {
 }
 
     environment {
-        MAVEN_OPTS = "-Xmx1024m"
+        MAVEN_OPTS = "-Dlog4j2.debug=true"
     }
 
     stages {
