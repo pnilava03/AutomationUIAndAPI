@@ -37,8 +37,7 @@ Feature: OpenCart My Account Page
   @regression @account
   Scenario: Verify available Links on My Affiliate Account Header
     Then I should see "My Affiliate Account" header section
-    Then I should see "Register for an affiliate account1" link
-
+    Then I should see "Register for an affiliate account" link
 
 
   @regression @account
@@ -49,7 +48,7 @@ Feature: OpenCart My Account Page
       | Password           |
       | Address Book       |
       | Wish List          |
-      |Notification        |
+      | Notification       |
       | Order History      |
       | Downloads          |
       | Recurring payments |
@@ -58,7 +57,18 @@ Feature: OpenCart My Account Page
       | Transactions       |
       | Newsletter         |
       | Logout             |
-#
+
+  @regression @account
+  Scenario: Verify All Menu from Account page
+    Then I should see All Menu bar links
+      | Home       |
+      | Special    |
+      | Blog       |
+      | Mega Menu  |
+      | AddOns     |
+      | My Account |
+
+
 #  # -------------------- Logout --------------------
 #  @smoke @logout
 #  Scenario: Logout from My Account successfully

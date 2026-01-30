@@ -8,6 +8,7 @@ import com.qa.opencart.pages.AccountPage;
 import com.qa.opencart.pages.LoginPage;
 import com.qa.opencart.utils.PropertiesFile;
 import io.cucumber.datatable.DataTable;
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.testng.Assert;
@@ -101,4 +102,17 @@ public class AccountPageStep {
         TestLogger.log("Verified ActualLinks and ExpectedLinks from Account Page" + actualList + " \n" + expectedList);
 
     }
-}
+
+    @Then("I should see All Menu bar links")
+    public void iShouldSeeAllMenuBarLinks(DataTable menuLinks) {
+        List<String> expectedList=menuLinks.asList();
+        List<String> actualText=  accountPage.getAllMenuLinks();
+        Assert.assertEquals(expectedList.size(),actualText.size());
+        TestLogger.log("Expected List Size is: "+expectedList.size()+" And Actual List Size is :"+actualText.size());
+        TestLogger.log("Expected List are: "+expectedList+" And Actual List are :"+actualText);
+        }
+
+
+
+    }
+

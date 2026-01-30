@@ -24,7 +24,7 @@ public class AccountPage {
     private final By list_group_Xpath = By.xpath("//div[@class='list-group']/a");
     private final By header_Xpath = By.xpath("//div[@id='content']/div/h2");
     private final By listOfLinksOnAccountPage_Xpath = By.xpath("//div[@class='list-group mb-3']/a");
-
+    private final By menu_Links=By.xpath("//ul[@class='navbar-nav horizontal']/li/a/div/span");
 
     public String getPageTitle() {
         return elementUtil.waitForTitleIs(AppConstant.ACCOUNT_PAGE_TITLE, AppConstant.LONG_TIME_OUT);
@@ -81,6 +81,16 @@ public class AccountPage {
         }
 
         return arrayList;
+    }
+
+    public List<String> getAllMenuLinks(){
+      List<WebElement> webList=  elementUtil.getElements(menu_Links);
+      ArrayList<String> arrayList= new ArrayList<>();
+      for(int i=0;i<webList.size();i++){
+          arrayList.add(webList.get(i).getText());
+      }
+
+      return arrayList;
     }
 
 }
