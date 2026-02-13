@@ -1,5 +1,6 @@
 package com.qa.opencart.driverManager;
 
+import com.qa.opencart.utils.PropertiesFile;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -7,13 +8,20 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class DriverFactory {
 
     private static final Logger logger = LogManager.getLogger(DriverFactory.class);
     private static volatile DriverFactory instance;
     private static final ThreadLocal<WebDriver> tlDriver = new ThreadLocal<WebDriver>();
+    private  OptionManager optionManager;
+    private PropertiesFile propertiesFile;
+
 
     //Create private constructor
     private DriverFactory() {
@@ -30,7 +38,16 @@ public class DriverFactory {
             case "CHROME":
                 if (tlDriver != null) {
                     logger.info("Initialize Chrome Browser");
-                    tlDriver.set(new ChromeDriver());
+
+                    try {
+                        if(Boolean.parseBoolean(propertiesFile.getPropertiesValue("remote"))) {
+                            tlDriver.set(new RemoteWebDriver(new URL(propertiesFile.getPropertiesValue("hubURL")), optionManager.getChromeOptions()));
+                        }else {
+                            tlDriver.set(new ChromeDriver(optionManager.getChromeOptions()));
+                        }
+                    } catch (MalformedURLException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else {
                     throw new NullPointerException("Local Thread driver is null ...");
                 }
@@ -39,16 +56,36 @@ public class DriverFactory {
             case "FIREFOX":
                 if (tlDriver != null) {
                     logger.info("Initialize FireFox Browser");
-                    tlDriver.set(new FirefoxDriver());
-                } else {
-                    throw new NullPointerException("Local Thread driver is null ...");
+
+                        try {
+                            if(Boolean.parseBoolean(propertiesFile.getPropertiesValue("remote"))) {
+                                tlDriver.set(new RemoteWebDriver(new URL(propertiesFile.getPropertiesValue("hubURL")),optionManager.getFirefoxOptions()));
+
+                            } else {
+                                tlDriver.set(new FirefoxDriver(optionManager.getFirefoxOptions()));
+                            }
+                        } catch (MalformedURLException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                else{
+            throw new NullPointerException("Local Thread driver is null ...");
                 }
                 break;
 
             case "EDGE":
                 if (tlDriver != null) {
                     logger.info("Initialize Edge Browser");
-                    tlDriver.set(new EdgeDriver());
+                    try {
+                        if(Boolean.parseBoolean(propertiesFile.getPropertiesValue("remote"))) {
+                            tlDriver.set(new RemoteWebDriver(new URL(propertiesFile.getPropertiesValue("hubURL")), optionManager.getEdgeOptions()));
+                        }else{
+                            tlDriver.set(new EdgeDriver(optionManager.getEdgeOptions()));
+                        }
+                    } catch (MalformedURLException e) {
+                        throw new RuntimeException(e);
+                    }
+
                 } else {
                     throw new NullPointerException("Local Thread driver is null ...");
                 }
