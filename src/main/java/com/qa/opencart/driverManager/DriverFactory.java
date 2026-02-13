@@ -19,8 +19,8 @@ public class DriverFactory {
     private static final Logger logger = LogManager.getLogger(DriverFactory.class);
     private static volatile DriverFactory instance;
     private static final ThreadLocal<WebDriver> tlDriver = new ThreadLocal<WebDriver>();
-    private  OptionManager optionManager;
-    private PropertiesFile propertiesFile;
+    private final OptionManager optionManager= new OptionManager();
+    private final PropertiesFile propertiesFile= new PropertiesFile();
 
 
     //Create private constructor

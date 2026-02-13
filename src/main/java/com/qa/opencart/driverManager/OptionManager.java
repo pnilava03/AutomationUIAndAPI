@@ -10,23 +10,25 @@ public class OptionManager {
     private final PropertiesFile propertiesFile;
 
 
-    public OptionManager(PropertiesFile propertiesFile) {
-        this.propertiesFile = propertiesFile;
+
+    public OptionManager() {
+        propertiesFile = new PropertiesFile();
     }
 
 
     public ChromeOptions getChromeOptions() {
         ChromeOptions chromeOptions = new ChromeOptions();
+
         if (Boolean.parseBoolean(propertiesFile.getPropertiesValue("headless"))) {
             chromeOptions.addArguments("--headless=new");
         }
 
-        if(Boolean.parseBoolean(propertiesFile.getPropertiesValue("incognito"))){
+        if (Boolean.parseBoolean(propertiesFile.getPropertiesValue("incognito"))) {
             chromeOptions.addArguments("--incognito");
         }
 
-        if(Boolean.parseBoolean(propertiesFile.getPropertiesValue("remote"))){
-            chromeOptions.setCapability("browserName","chrome");
+        if (Boolean.parseBoolean(propertiesFile.getPropertiesValue("remote"))) {
+            chromeOptions.setCapability("browserName", "chrome");
         }
 
         chromeOptions.addArguments("--start-maximized");
@@ -37,18 +39,19 @@ public class OptionManager {
     }
 
     public FirefoxOptions getFirefoxOptions() {
+
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         if (Boolean.parseBoolean(propertiesFile.getPropertiesValue("headless"))) {
             firefoxOptions.addArguments("--headless");
 
         }
 
-        if(Boolean.parseBoolean(propertiesFile.getPropertiesValue("incognito"))){
+        if (Boolean.parseBoolean(propertiesFile.getPropertiesValue("incognito"))) {
             firefoxOptions.addArguments("--incognito");
         }
 
-        if(Boolean.parseBoolean(propertiesFile.getPropertiesValue("remote"))){
-            firefoxOptions.setCapability("browserName","firefox");
+        if (Boolean.parseBoolean(propertiesFile.getPropertiesValue("remote"))) {
+            firefoxOptions.setCapability("browserName", "firefox");
         }
 
         return firefoxOptions;
@@ -62,12 +65,12 @@ public class OptionManager {
 
         }
 
-        if(Boolean.parseBoolean(propertiesFile.getPropertiesValue("incognito"))){
+        if (Boolean.parseBoolean(propertiesFile.getPropertiesValue("incognito"))) {
             edgeOptions.addArguments("--Inprivate");
         }
 
-        if(Boolean.parseBoolean(propertiesFile.getPropertiesValue("remote"))){
-            edgeOptions.setCapability("browserName","edge");
+        if (Boolean.parseBoolean(propertiesFile.getPropertiesValue("remote"))) {
+            edgeOptions.setCapability("browserName", "edge");
         }
 
         return edgeOptions;
