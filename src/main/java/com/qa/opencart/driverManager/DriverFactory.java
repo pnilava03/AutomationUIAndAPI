@@ -19,8 +19,8 @@ public class DriverFactory {
     private static final Logger logger = LogManager.getLogger(DriverFactory.class);
     private static volatile DriverFactory instance;
     private static final ThreadLocal<WebDriver> tlDriver = new ThreadLocal<WebDriver>();
-    private final OptionManager optionManager= new OptionManager();
-    private final PropertiesFile propertiesFile= new PropertiesFile();
+    private final OptionManager optionManager = new OptionManager();
+    private final PropertiesFile propertiesFile = new PropertiesFile();
 
 
     //Create private constructor
@@ -40,9 +40,9 @@ public class DriverFactory {
                     logger.info("Initialize Chrome Browser");
 
                     try {
-                        if(Boolean.parseBoolean(propertiesFile.getPropertiesValue("remote"))) {
+                        if (Boolean.parseBoolean(propertiesFile.getPropertiesValue("remote"))) {
                             tlDriver.set(new RemoteWebDriver(new URL(propertiesFile.getPropertiesValue("hubURL")), optionManager.getChromeOptions()));
-                        }else {
+                        } else {
                             tlDriver.set(new ChromeDriver(optionManager.getChromeOptions()));
                         }
                     } catch (MalformedURLException e) {
@@ -57,19 +57,18 @@ public class DriverFactory {
                 if (tlDriver != null) {
                     logger.info("Initialize FireFox Browser");
 
-                        try {
-                            if(Boolean.parseBoolean(propertiesFile.getPropertiesValue("remote"))) {
-                                tlDriver.set(new RemoteWebDriver(new URL(propertiesFile.getPropertiesValue("hubURL")),optionManager.getFirefoxOptions()));
+                    try {
+                        if (Boolean.parseBoolean(propertiesFile.getPropertiesValue("remote"))) {
+                            tlDriver.set(new RemoteWebDriver(new URL(propertiesFile.getPropertiesValue("hubURL")), optionManager.getFirefoxOptions()));
 
-                            } else {
-                                tlDriver.set(new FirefoxDriver(optionManager.getFirefoxOptions()));
-                            }
-                        } catch (MalformedURLException e) {
-                            throw new RuntimeException(e);
+                        } else {
+                            tlDriver.set(new FirefoxDriver(optionManager.getFirefoxOptions()));
                         }
+                    } catch (MalformedURLException e) {
+                        throw new RuntimeException(e);
                     }
-                else{
-            throw new NullPointerException("Local Thread driver is null ...");
+                } else {
+                    throw new NullPointerException("Local Thread driver is null ...");
                 }
                 break;
 
@@ -77,9 +76,9 @@ public class DriverFactory {
                 if (tlDriver != null) {
                     logger.info("Initialize Edge Browser");
                     try {
-                        if(Boolean.parseBoolean(propertiesFile.getPropertiesValue("remote"))) {
+                        if (Boolean.parseBoolean(propertiesFile.getPropertiesValue("remote"))) {
                             tlDriver.set(new RemoteWebDriver(new URL(propertiesFile.getPropertiesValue("hubURL")), optionManager.getEdgeOptions()));
-                        }else{
+                        } else {
                             tlDriver.set(new EdgeDriver(optionManager.getEdgeOptions()));
                         }
                     } catch (MalformedURLException e) {

@@ -9,8 +9,6 @@ public class OptionManager {
 
     private final PropertiesFile propertiesFile;
 
-
-
     public OptionManager() {
         propertiesFile = new PropertiesFile();
     }
