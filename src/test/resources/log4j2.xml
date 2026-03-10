@@ -10,8 +10,8 @@
             <PatternLayout pattern="${PATTERN}"/>
         </Console>
 
-        <File name="MAIN" fileName="${LOG_DIR}/execution.log" append="false">
-            <PatternLayout pattern="${PATTERN}"/>
+        <File name="MAIN" fileName="${LOG_DIR}/opencart.log" append="false">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger - %msg%n"/>
         </File>
     </Appenders>
 
