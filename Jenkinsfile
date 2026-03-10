@@ -3,51 +3,22 @@ pipeline {
 
     parameters {
         choice(name: 'BROWSER', choices: ['chrome', 'edge', 'firefox'], description: 'Select Browser')
-        choice(name: 'ENV', choices: ['Dev','QA', 'Stage', 'uat','PROD'], description: 'Select Environment')
+        choice(name: 'ENV', choices: ['Dev', 'QA', 'Stage', 'uat', 'PROD'], description: 'Select Environment')
         choice(name: 'HEADLESS', choices: ['true', 'false'], description: 'Run in headless mode?')
-        choice(name: 'TEST_SUITE', choices: ['smoke.xml', 'testNG.xml','negative.xml'], description: 'Which test Suite You want to run?')
+        choice(name: 'TEST_SUITE', choices: ['smoke.xml', 'testNG.xml', 'negative.xml'], description: 'Which Test Suite do you want to run?')
     }
 
     environment {
         MAVEN_OPTS = "-Dlog4j2.debug=true"
+        REPORT_BASE = "target/reports"
     }
 
     stages {
 
-        stage('Build') {
-            steps {
-                echo "Build"
-            }
-        }
-
-        stage('Run Unit Test') {
-            steps {
-                echo "Run unit test"
-            }
-        }
-
-        stage('Deploy to Dev Env') {
-            steps {
-                echo "Dev Env Deployment done"
-            }
-        }
-
-        stage('Run Integration Test') {
-            steps {
-                echo "Run Integration test"
-            }
-        }
-
-        stage('Deploy to QA Env') {
-            steps {
-                echo "QA Env Deployment done"
-            }
-        }
-
         stage('Clean Workspace') {
             steps {
                 cleanWs()
-                echo "Clean Workspace"
+                echo "Workspace cleaned successfully"
             }
         }
 
@@ -55,6 +26,7 @@ pipeline {
             steps {
                 git branch: 'main',
                     url: 'https://github.com/pnilava03/AutomationUIAndAPI.git'
+                echo "Source checkout completed"
             }
         }
 
@@ -65,126 +37,79 @@ pipeline {
             }
         }
 
-        stage('Dependency Install') {
+        stage('Build / Compile') {
             steps {
-                bat 'mvn clean compile'
+                bat 'mvn clean compile -DskipTests'
             }
         }
 
-        stage('Execute Smoke Tests') {
+        stage('Execute Selected Test Suite') {
             steps {
+                echo "Executing suite: ${params.TEST_SUITE}"
+
                 bat """
                 mvn test ^
-                -DtestSuite=smoke.xml ^
+                -DtestSuite=${params.TEST_SUITE} ^
                 -Dbrowser=${params.BROWSER} ^
                 -Denv=${params.ENV} ^
                 -Dheadless=${params.HEADLESS}
                 """
 
                 bat """
-                if not exist target\\reports\\smoke mkdir target\\reports\\smoke
-                xcopy /E /I /Y target\\chaintest target\\reports\\smoke\\chaintest
+                if not exist "%REPORT_BASE%" mkdir "%REPORT_BASE%"
+                if not exist "%REPORT_BASE%\\%TEST_SUITE%" mkdir "%REPORT_BASE%\\%TEST_SUITE%"
+
+                if exist target\\chaintest (
+                    xcopy /E /I /Y target\\chaintest "%REPORT_BASE%\\%TEST_SUITE%\\chaintest"
+                ) else (
+                    echo ChainTest folder not found
+                )
+
+                if exist target\\surefire-reports (
+                    xcopy /E /I /Y target\\surefire-reports "%REPORT_BASE%\\%TEST_SUITE%\\surefire-reports"
+                ) else (
+                    echo surefire-reports folder not found
+                )
                 """
             }
+
             post {
                 always {
+                    junit testResults: "target/reports/${params.TEST_SUITE}/surefire-reports/TEST-*.xml", allowEmptyResults: true
+
                     publishHTML(target: [
-                        reportDir: 'target/reports/smoke/chaintest',
+                        reportDir: "target/reports/${params.TEST_SUITE}/chaintest",
                         reportFiles: 'Index.html',
-                        reportName: 'Smoke Report',
+                        reportName: "ChainTest Report - ${params.TEST_SUITE}",
                         keepAll: true,
                         alwaysLinkToLastBuild: true,
                         allowMissing: true
                     ])
 
-                    archiveArtifacts artifacts: 'target/reports/smoke/**/*.*', fingerprint: true, allowEmptyArchive: true
+                    archiveArtifacts artifacts: "target/reports/${params.TEST_SUITE}/**/*.*", fingerprint: true, allowEmptyArchive: true
                 }
             }
         }
 
-        stage('Execute Functional Tests') {
+        stage('Archive Full Target Folder') {
             steps {
-                bat """
-                mvn test ^
-                -DtestSuite=negative.xml ^
-                -Dbrowser=${params.BROWSER} ^
-                -Denv=${params.ENV} ^
-                -Dheadless=${params.HEADLESS}
-                """
-
-                bat """
-                if not exist target\\reports\\functional mkdir target\\reports\\functional
-                xcopy /E /I /Y target\\chaintest target\\reports\\functional\\chaintest
-                """
-            }
-            post {
-                always {
-                    publishHTML(target: [
-                        reportDir: 'target/reports/functional/chaintest',
-                        reportFiles: 'Index.html',
-                        reportName: 'Functional Report',
-                        keepAll: true,
-                        alwaysLinkToLastBuild: true,
-                        allowMissing: true
-                    ])
-
-                    archiveArtifacts artifacts: 'target/reports/functional/**/*.*', fingerprint: true, allowEmptyArchive: true
-                }
-            }
-        }
-
-        stage('Execute Regression Tests') {
-            steps {
-                bat """
-                mvn test ^
-                -DtestSuite=testNG.xml ^
-                -Dbrowser=${params.BROWSER} ^
-                -Denv=${params.ENV} ^
-                -Dheadless=${params.HEADLESS}
-                """
-
-                bat """
-                if not exist target\\reports\\regression mkdir target\\reports\\regression
-                xcopy /E /I /Y target\\chaintest target\\reports\\regression\\chaintest
-                """
-            }
-            post {
-                always {
-                    publishHTML(target: [
-                        reportDir: 'target/reports/regression/chaintest',
-                        reportFiles: 'Index.html',
-                        reportName: 'Regression Report',
-                        keepAll: true,
-                        alwaysLinkToLastBuild: true,
-                        allowMissing: true
-                    ])
-
-                    archiveArtifacts artifacts: 'target/reports/regression/**/*.*', fingerprint: true, allowEmptyArchive: true
-                }
-            }
-        }
-
-        stage('Generate Surefire Reports') {
-            steps {
-                bat 'mvn surefire-report:report'
-            }
-        }
-
-        stage('Archive Artifacts') {
-            steps {
-                archiveArtifacts artifacts: '**/target/**/*.*', fingerprint: true
+                archiveArtifacts artifacts: 'target/**/*.*', fingerprint: true, allowEmptyArchive: true
             }
         }
     }
 
-   post {
-       always {
-           script {
-               if (fileExists('target/surefire-reports')) {
-                   junit testResults: 'target/surefire-reports/*.xml', allowEmptyResults: true
-               } else {
-                   echo 'No JUnit report directory found.'
-               }
-           }
-       }
-   }
+    post {
+        success {
+            echo "Pipeline executed successfully"
+        }
+        unstable {
+            echo "Pipeline completed with unstable status. Please check test results."
+        }
+        failure {
+            echo "Pipeline failed. Please check console logs."
+        }
+        always {
+            echo "Pipeline execution finished"
+        }
+    }
+}
