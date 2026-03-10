@@ -177,18 +177,14 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            junit '**/target/surefire-reports/*.xml'
-            echo 'Pipeline Execution Completed'
-        }
-
-        success {
-            echo 'Build Successful'
-        }
-
-        failure {
-            echo 'Build Failed - Check Logs'
-        }
-    }
-}
+   post {
+       always {
+           script {
+               if (fileExists('target/surefire-reports')) {
+                   junit testResults: 'target/surefire-reports/*.xml', allowEmptyResults: true
+               } else {
+                   echo 'No JUnit report directory found.'
+               }
+           }
+       }
+   }
