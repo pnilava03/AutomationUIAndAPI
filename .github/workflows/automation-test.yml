@@ -5,10 +5,63 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      browser:
+        description: "Select browser"
+        required: true
+        default: "chrome"
+        type: choice
+        options:
+          - chrome
+          - firefox
+          - edge
+
+      env:
+        description: "Select environment"
+        required: true
+        default: "QA"
+        type: choice
+        options:
+          - Dev
+          - QA
+          - Stage
+          - UAT
+          - PROD
+
+      headless:
+        description: "Run in headless mode"
+        required: true
+        default: "true"
+        type: choice
+        options:
+          - "true"
+          - "false"
+
+      suite:
+        description: "Select test suite"
+        required: true
+        default: "smoke.xml"
+        type: choice
+        options:
+          - smoke.xml
+          - testNG.xml
+          - negative.xml
+
+concurrency:
+  group: selenium-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    env:
+      BROWSER: ${{ github.event.inputs.browser || 'chrome' }}
+      TEST_ENV: ${{ github.event.inputs.env || 'QA' }}
+      HEADLESS: ${{ github.event.inputs.headless || 'true' }}
+      TEST_SUITE: ${{ github.event.inputs.suite || 'smoke.xml' }}
 
     steps:
       - name: Checkout source code
@@ -28,11 +81,37 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: Show selected execution parameters
+        run: |
+          echo "Browser     : $BROWSER"
+          echo "Environment : $TEST_ENV"
+          echo "Headless    : $HEADLESS"
+          echo "Suite       : $TEST_SUITE"
+
       - name: Build project
         run: mvn clean install -DskipTests
 
-      - name: Run smoke suite
-        run: mvn test -Dsurefire.suiteXmlFiles=src/test/resources/xmlFiles/smoke.xml
+      - name: Run selected suite
+        run: >
+          mvn test
+          -Dbrowser=$BROWSER
+          -Denv=$TEST_ENV
+          -Dheadless=$HEADLESS
+          -Dsurefire.suiteXmlFiles=src/test/resources/xmlFiles/$TEST_SUITE
+
+      - name: Debug workspace after execution
+        if: always()
+        run: |
+          echo "Current directory:"
+          pwd
+          echo "Root files:"
+          ls -la
+          echo "XML files found:"
+          find . -name "*.xml" || true
+          echo "Target folder structure:"
+          ls -R target || true
+          echo "ChainTest folder:"
+          find . -type d -name "chaintest" || true
 
       - name: Upload ChainTest Report
         if: always()
@@ -40,13 +119,27 @@ jobs:
         with:
           name: chaintest-report
           path: target/chaintest/
+          if-no-files-found: warn
 
-      - name: Upload reports
+      - name: Upload automation reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: automation-reports
           path: |
-            target/surefire-reports
-            test-output
-            reports
+            target/surefire-reports/
+            test-output/
+            reports/
+          if-no-files-found: warn
+
+      - name: Upload screenshots
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshots
+          path: |
+            target/screenshots/
+            target/screenshot/
+            screenshots/
+            screenshot/
+          if-no-files-found: warn
