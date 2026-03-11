@@ -43,3 +43,10 @@ jobs:
             target/surefire-reports
             test-output
             reports
+            
+            - name: Upload ChainTest Report
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                name: chaintest-report
+                path: reports/chaintest/
