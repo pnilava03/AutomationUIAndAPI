@@ -138,8 +138,8 @@ jobs:
         with:
           name: screenshots
           path: |
-            target/screenshots/
-            target/screenshot/
+            target/chaintest/resources/
+            target/chaintest/resources/
             screenshots/
             screenshot/
           if-no-files-found: warn
