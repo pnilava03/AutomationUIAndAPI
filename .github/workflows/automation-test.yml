@@ -34,6 +34,13 @@ jobs:
       - name: Run smoke suite
         run: mvn test -Dsurefire.suiteXmlFiles=src/test/resources/xmlFiles/smoke.xml
 
+      - name: Upload ChainTest Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: chaintest-report
+          path: target/chaintest/
+
       - name: Upload reports
         if: always()
         uses: actions/upload-artifact@v4
@@ -43,10 +50,3 @@ jobs:
             target/surefire-reports
             test-output
             reports
-            
-            - name: Upload ChainTest Report
-              if: always()
-              uses: actions/upload-artifact@v4
-              with:
-                name: chaintest-report
-                path: target/chaintest/
