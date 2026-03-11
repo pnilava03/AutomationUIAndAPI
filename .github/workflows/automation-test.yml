@@ -32,7 +32,7 @@ jobs:
         run: mvn clean install -DskipTests
 
       - name: Run smoke suite
-        run: mvn test -Dsurefire.suiteXmlFiles=smoke.xml
+        run: mvn test -Dsurefire.suiteXmlFiles=resources/xmlFiles/smoke.xml
 
       - name: Upload reports
         if: always()
