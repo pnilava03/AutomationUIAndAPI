@@ -1,50 +1,48 @@
-package com.AALife.Base;
+package com.qa.opencart.base;
 
-import com.AALife.APISpecifictions.RequestSpec;
-import com.AALife.APISpecifictions.ResponseSpec;
-import com.AALife.utils.PropertiesFile;
+import com.qa.opencart.constants.AppConstant;
+import com.qa.opencart.utils.APISpecifications;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
-import java.util.Map;
-
 public class BaseAPI {
-
-    private final PropertiesFile propertiesFile = new PropertiesFile("configFile.properties");
-
     public void setBaseURI(String baseURL) {
         RestAssured.baseURI = baseURL;
     }
 
-    public Response getRequest(String endPoint) {
-        return RestAssured.given()
-                .spec(RequestSpec.getRequestSpecification(propertiesFile.getPropertiesValue("Restful_Booker")))
-                .when()
-                .get(endPoint)
-                .then()
-                .assertThat()
-                .extract()
-                .response();
-    }
-
-    public Response getRequestWithQueryParams(String endPoint, Map<String, String> queryParams) {
-        return RestAssured.given()
-                .spec(RequestSpec.getRequestSpecification(propertiesFile.getPropertiesValue("Restful_Booker")))
-                .queryParams(queryParams)
-                .when()
-                .get(endPoint)
-                .then()
-                .assertThat()
-                .extract()
-                .response();
-    }
-
     public Response postRequest(String endPoint, Object payload) {
         return RestAssured.given()
-                .spec(RequestSpec.getRequestSpecification(propertiesFile.getPropertiesValue("Restful_Booker")))
+                .spec(APISpecifications.createIssueSpecs())
                 .body(payload)
                 .when()
                 .post(endPoint)
+                .then()
+                .assertThat()
+                .extract()
+                .response();
+    }
+
+    public Response postIssueComment(String postIssueEndPoint, String issueId, Object payload){
+        String finalEndPoint= AppConstant.CREATE_ISSUE+issueId+postIssueEndPoint;
+        return RestAssured.given()
+                .spec(APISpecifications.createIssueSpecs())
+                .body(payload)
+                .when()
+                .post(finalEndPoint)
+                .then()
+                .assertThat()
+                .extract()
+                .response();
+    }
+
+
+    public Response updateIssueComment(String postIssueEndPoint, String issueId, String commentId, Object payload){
+        String finalEndPoint= AppConstant.CREATE_ISSUE+issueId+postIssueEndPoint+commentId;
+        return RestAssured.given()
+                .spec(APISpecifications.createIssueSpecs())
+                .body(payload)
+                .when()
+                .post(finalEndPoint)
                 .then()
                 .assertThat()
                 .extract()
