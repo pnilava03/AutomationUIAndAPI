@@ -1,4 +1,4 @@
-package com.AALife.CommonMethods;
+package com.qa.opencart.CommonMethods;
 
 import io.restassured.response.Response;
 import org.testng.Assert;
