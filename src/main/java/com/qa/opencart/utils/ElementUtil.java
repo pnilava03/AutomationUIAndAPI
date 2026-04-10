@@ -24,10 +24,12 @@ public class ElementUtil {
 
 	private WebDriver driver;
 	private Actions act;
+    private JavaScriptUtil javaScriptUtil;
 
 	public ElementUtil(WebDriver driver) {
 		this.driver = driver;
 		act = new Actions(driver);
+        javaScriptUtil= new JavaScriptUtil(driver);
 	}
 
 	private void nullCheck(CharSequence... value) {
@@ -39,6 +41,7 @@ public class ElementUtil {
 	public void doSendKeys(By locator, String value) {
 		nullCheck(value);
 		getElement(locator).sendKeys(value);
+
 	}
 
 	public void doSendKeys(String locatorType, String locatorValue, String value) {
@@ -129,11 +132,15 @@ public class ElementUtil {
 	}
 
 	public WebElement getElement(String locatorType, String locatorValue) {
-		return driver.findElement(getBy(locatorType, locatorValue));
+		WebElement element= driver.findElement(getBy(locatorType, locatorValue));
+        javaScriptUtil.highLightElement(element);
+        return  element;
 	}
 
 	public WebElement getElement(By locator) {
-		return driver.findElement(locator);
+		WebElement element= driver.findElement(locator);
+        javaScriptUtil.highLightElement(element);
+        return element;
 
 	}
 
