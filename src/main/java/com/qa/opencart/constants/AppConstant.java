@@ -39,5 +39,6 @@ public class AppConstant {
 
     public static final List<String> NEWSLETTER_HEADER_LINK_LIST = List.of("Subscribe / unsubscribe to newsletter");
 
-
+    public static final String CREATE_ISSUE="/rest/api/3/issue";
+    public static final String POST_ISSUE_COMMENT="/comment";
 }
