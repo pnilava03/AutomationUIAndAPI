@@ -1,5 +1,6 @@
 package com.qa.opencart.utils;
 
+import io.restassured.module.jsv.JsonSchemaValidator;
 import com.qa.opencart.constants.AppConstant;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
@@ -17,6 +18,11 @@ public class APISpecifications {
 
     public static ResponseSpecification createIssueResponseSpecs(int statusCode){
       return new ResponseSpecBuilder().expectStatusCode(statusCode).build();
+    }
+
+
+    public static ResponseSpecification jsonValidationResponse(String filePath){
+      return  new ResponseSpecBuilder().expectBody(JsonSchemaValidator.matchesJsonSchemaInClasspath(filePath)).build();
     }
 
 }
