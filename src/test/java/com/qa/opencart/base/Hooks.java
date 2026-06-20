@@ -1,6 +1,11 @@
 package com.qa.opencart.base;
 
 import com.aventstack.chaintest.plugins.ChainTestListener;
+import com.qa.opencart.APIRequests.CreateIssueRequest;
+import com.qa.opencart.APIRequests.IssueComment;
+import com.qa.opencart.APIRequests.UpdateComments;
+import com.qa.opencart.Builder.JiraPayLoadBuilder;
+import com.qa.opencart.constants.AppConstant;
 import com.qa.opencart.driverManager.DriverFactory;
 import com.qa.opencart.enums.EnvironmentType;
 import com.qa.opencart.exceptions.EnvironmentException;
@@ -12,6 +17,7 @@ import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import io.cucumber.java.Status;
+import io.restassured.response.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
@@ -21,6 +27,8 @@ public class Hooks {
 
     private static final Logger logger = LogManager.getLogger(Hooks.class);
     private final PropertiesFile propertiesFile = new PropertiesFile();
+    CreateIssueRequest createIssueRequest = JiraPayLoadBuilder.buildIssue();
+    BaseAPI baseAPI;
 
 
     @Before(order = 0)
@@ -51,11 +59,13 @@ public class Hooks {
 
             }
 
-        }else{
-            if(scenario.getStatus()==Status.FAILED){
+        } else {
+            if (scenario.getStatus() == Status.FAILED) {
+             //   baseAPI.postRequest(AppConstant.CREATE_ISSUE, createIssueRequest);
                 TestLogger.log("Attaching screenshot to ChainTest...");
 
                 byte[] bytes = ReportsUtil.takeScreenshotAsByte();
+
                 if (bytes != null) {
                     ChainTestListener.embed(bytes, "image/png");
                 }
@@ -66,5 +76,5 @@ public class Hooks {
     }
 
 
-    }
+}
 

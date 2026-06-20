@@ -58,9 +58,9 @@ public class BaseTest {
 
         if (result.isSuccess()) {
             logger.info("Taking screenshot ...");
-            ChainTestListener.embed(ReportsUtil.takeScreenshotAsBase64(), "image/png");
+            ChainTestListener.embed(ReportsUtil.takeScreenshotAsByte(), "image/png");
         } else {
-            ChainTestListener.embed(ReportsUtil.takeScreenshotAsBase64(), "image/png");
+            ChainTestListener.embed(ReportsUtil.takeScreenshotAsByte(), "image/png");
         }
     }
 
