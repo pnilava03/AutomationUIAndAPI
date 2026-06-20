@@ -172,26 +172,6 @@ Framework can be integrated with:
 
 ---
 
-## Author
-
-**Nilava Pal**
-Lead SDET | Senior QA Automation Engineer
-
-### Skills
-
-* Selenium WebDriver
-* Java
-* TestNG
-* Cucumber BDD
-* REST Assured
-* Selenium Grid
-* Docker
-* Jenkins
-* GitHub Actions
-* API Testing
-* CI/CD Integration
-
-
 ## CI/CD and Docker Execution Flow
 This framework supports local execution, Selenium Grid execution, Dockerized execution, and CI/CD integration through GitHub Actions and Jenkins.
 
@@ -257,4 +237,21 @@ Reports Generated
 - Jenkins Pipeline Integration
 - Config Driven Execution
 
+### Skills
 
+* Selenium WebDriver
+* Java
+* TestNG
+* Cucumber BDD
+* REST Assured
+* Selenium Grid
+* Docker
+* Jenkins
+* GitHub Actions
+* API Testing
+* CI/CD Integration
+
+## Author
+
+**Nilava Pal**
+Lead SDET | Senior QA Automation Engineer
