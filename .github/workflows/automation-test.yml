@@ -73,7 +73,33 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y chromium-browser chromium-chromedriver firefox
+          sudo apt-get install -y unzip wget curl
+
+      - name: Install Google Chrome
+        run: |
+          wget -q -O /tmp/google-chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+          sudo apt-get install -y /tmp/google-chrome.deb || sudo dpkg -i /tmp/google-chrome.deb || true
+    # ensure chrome is on PATH
+          google-chrome --version
+
+      - name: Install matching ChromeDriver
+        run: |
+          # get Chrome major version
+          CHROME_VERSION=$(google-chrome --version | grep -oP '\d+\.\d+\.\d+\.\d+')
+          CHROME_MAJOR=$(echo "$CHROME_VERSION" | awk -F. '{print $1}')
+          echo "Chrome version: $CHROME_VERSION (major: $CHROME_MAJOR)"
+          # get latest chromedriver for that major version
+          DRIVER_VERSION=$(curl -sS "https://chromedriver.storage.googleapis.com/LATEST_RELEASE_${CHROME_MAJOR}")
+          echo "Using chromedriver version: $DRIVER_VERSION"
+          wget -q -O /tmp/chromedriver_linux64.zip "https://chromedriver.storage.googleapis.com/${DRIVER_VERSION}/chromedriver_linux64.zip"
+          sudo unzip -o /tmp/chromedriver_linux64.zip -d /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
+          chromedriver --version
+          
+      - name: Verify environment
+        run: |
+          google-chrome --version || true
+          chromedriver --version || true
 
       - name: Install Edge browser
         run: |
