@@ -73,6 +73,22 @@ jobs:
           distribution: temurin
           java-version: '21'
 
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y chromium-browser firefox
+
+      - name: Install Edge browser
+        run: |
+          sudo apt-get install -y microsoft-edge-stable || echo "Edge installation skipped"
+
+      - name: Verify browser installations
+        run: |
+          echo "Checking installed browsers..."
+          which chromium-browser || which chromium || echo "Chromium not found"
+          which firefox || echo "Firefox not found"
+          which microsoft-edge || echo "Edge not found"
+
       - name: Cache Maven dependencies
         uses: actions/cache@v4
         with:
