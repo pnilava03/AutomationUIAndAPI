@@ -16,7 +16,6 @@ on:
           - chrome
           - firefox
           - edge
-
       env:
         description: "Select environment"
         required: true
@@ -28,7 +27,6 @@ on:
           - Stage
           - UAT
           - PROD
-
       headless:
         description: "Run in headless mode"
         required: true
@@ -37,7 +35,6 @@ on:
         options:
           - "true"
           - "false"
-
       suite:
         description: "Select test suite"
         required: true
@@ -76,7 +73,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y chromium-browser firefox
+          sudo apt-get install -y chromium-browser chromium-chromedriver firefox
 
       - name: Install Edge browser
         run: |
@@ -86,6 +83,7 @@ jobs:
         run: |
           echo "Checking installed browsers..."
           which chromium-browser || which chromium || echo "Chromium not found"
+          which chromium-chromedriver || echo "ChromeDriver not found"
           which firefox || echo "Firefox not found"
           which microsoft-edge || echo "Edge not found"
 
@@ -114,6 +112,7 @@ jobs:
           -Denv=$TEST_ENV
           -Dheadless=$HEADLESS
           -Dsurefire.suiteXmlFiles=src/test/resources/xmlFiles/$TEST_SUITE
+          -Dwebdriver.chrome.driver=/usr/bin/chromium-chromedriver
 
       - name: Debug workspace after execution
         if: always()

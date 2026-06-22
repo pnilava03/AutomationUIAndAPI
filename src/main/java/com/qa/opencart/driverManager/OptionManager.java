@@ -9,6 +9,7 @@ public class OptionManager {
 
     private final PropertiesFile propertiesFile;
 
+
     public OptionManager() {
         propertiesFile = new PropertiesFile();
     }
@@ -16,6 +17,12 @@ public class OptionManager {
 
     public ChromeOptions getChromeOptions() {
         ChromeOptions chromeOptions = new ChromeOptions();
+
+        chromeOptions.addArguments("--headless=new");
+        chromeOptions.addArguments("--start-maximized");
+        chromeOptions.addArguments("--disable-notifications");
+        chromeOptions.addArguments("--no-sandbox");  // Add this
+        chromeOptions.addArguments("--disable-dev-shm-usage");
 
         if (Boolean.parseBoolean(propertiesFile.getPropertiesValue("headless"))) {
             chromeOptions.addArguments("--headless=new");
