@@ -13,6 +13,9 @@ import org.openqa.selenium.safari.SafariDriver;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
+
+import static com.qa.opencart.constants.AppConstant.LONG_TIME_OUT;
 
 public class DriverFactory {
 
@@ -112,6 +115,7 @@ public class DriverFactory {
                 throw new IllegalArgumentException("Please provide proper browser name ...");
         }
 
+        tlDriver.get().manage().timeouts().pageLoadTimeout(Duration.ofSeconds(LONG_TIME_OUT*4));
         tlDriver.get().manage().window().maximize();
         tlDriver.get().manage().deleteAllCookies();
     }
