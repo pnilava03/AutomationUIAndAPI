@@ -5,6 +5,7 @@ import com.qa.opencart.log.TestLogger;
 import com.qa.opencart.pages.AccountPage;
 import com.qa.opencart.pages.LoginPage;
 import com.qa.opencart.utils.PropertiesFile;
+import com.qa.opencart.utils.ReportsUtil;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -28,6 +29,8 @@ public class LoginStep {
         TestLogger.log("Entering userName ...");
         loginPage.enterUserName(userName);
         TestLogger.log("UserName Entered Successfully .. userName is :: " + userName);
+        //ReportsUtil.takeScreenshotAsByte();
+
 
     }
 
@@ -36,6 +39,7 @@ public class LoginStep {
         TestLogger.log("Entering Password ...");
         loginPage.enterPassword(passWord);
         TestLogger.log("Password Entered Successfully .. userName is :: " + passWord);
+       // ReportsUtil.takeScreenshotAsByte();
 
     }
 
@@ -44,6 +48,7 @@ public class LoginStep {
         TestLogger.log("Clicking Login button ...");
         accountPage = loginPage.clickOnLoginButton();
         TestLogger.log("Clicked on Login button Successfully");
+       // ReportsUtil.takeScreenshotAsByte();
     }
 
     @Then("I should see the {string} page")
@@ -51,6 +56,7 @@ public class LoginStep {
         TestLogger.log("Verifying application logged successfully ... ");
         String actualResult = accountPage.getPageTitle();
         TestLogger.log("Application logged successfully ... " + actualResult);
+        //ReportsUtil.takeScreenshotAsByte();
 
     }
 
@@ -59,6 +65,7 @@ public class LoginStep {
         TestLogger.log("Verifying Alert message if password is wrong");
         String actualError = loginPage.alertMessage(expectedError);
         TestLogger.log("Successfully Verifying alert message if password is wrong ... " + actualError);
+        //ReportsUtil.takeScreenshotAsByte();
     }
 
 }
