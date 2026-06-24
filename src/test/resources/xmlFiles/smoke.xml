@@ -3,9 +3,9 @@
 
 <suite name="Opencart App Test Smoke Suite" verbose="4" parallel="tests" thread-count="6">
 
-    <listeners>
-        <listener class-name="com.aventstack.chaintest.plugins.ChainTestListener"/>
-    </listeners>
+<!--    <listeners>-->
+<!--        <listener class-name="com.aventstack.chaintest.plugins.ChainTestListener"/>-->
+<!--    </listeners>-->
 
     <test name="Login Page Test_Smoke_Firefox">
         <parameter name="browser" value="firefox" />
