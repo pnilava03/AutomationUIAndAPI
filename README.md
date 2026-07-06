@@ -22,6 +22,40 @@ Scalable automation framework supporting UI and API testing using Selenium WebDr
 
 ---
 
+## ⭐ Framework Highlights
+
+✔ UI + API Automation in a Single Framework
+
+✔ Selenium Grid 4 with Docker Support
+
+✔ Parallel & Cross-Browser Execution
+
+✔ ThreadLocal WebDriver Management
+
+✔ Page Object Model (POM)
+
+✔ TestNG + Cucumber BDD
+
+✔ Config-Driven Execution
+
+✔ Request & Response Specifications
+
+✔ JSON Schema Validation
+
+✔ Positive & Negative API Testing
+
+✔ Reusable Utility Classes
+
+✔ Screenshot Capture on Failure
+
+✔ Enterprise Reporting & Logging
+
+✔ Jenkins CI Integration
+
+✔ GitHub Actions CI/CD
+
+✔ Scalable & Maintainable Framework Design
+
 ## Architecture
 
 ```text
@@ -236,6 +270,20 @@ Reports Generated
 - GitHub Actions Integration
 - Jenkins Pipeline Integration
 - Config Driven Execution
+
+## 🚀 Business Impact
+
+• Reduced regression execution time by approximately 60%.
+
+• Improved automation coverage from approximately 40% to 80%.
+
+• Enabled unattended regression execution using Selenium Grid with Docker.
+
+• Supported CI/CD pipelines using Jenkins and GitHub Actions.
+
+• Improved release confidence through automated UI and API validation.
+
+• Designed a scalable automation framework suitable for enterprise web applications.
 
 ### Skills
 
